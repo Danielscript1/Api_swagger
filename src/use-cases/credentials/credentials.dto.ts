@@ -4,6 +4,7 @@ import { JSONSchema } from 'class-validator-jsonschema';
 
 export class LoginDTO {
   @IsEmail()
+  @MinLength(1, { message: 'Email usuário para autenticação' })
   @JSONSchema({ 
     description: 'Email do usuário para autenticação', 
     example: 'usuario@exemplo.com' 
@@ -11,7 +12,7 @@ export class LoginDTO {
   email!: string;
 
   @IsString()
-  @MinLength(6, { message: 'Senha deve ter no mínimo 6 caracteres' })
+  @MinLength(1, { message: 'Senha usuário para autenticação' })
   @JSONSchema({ 
     description: 'Senha do usuário', 
     example: 'senha123' 

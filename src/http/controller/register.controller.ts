@@ -2,24 +2,24 @@ import type { Express } from 'express';
 import { SwaggerRouter, SwaggerContentType } from '../routes/swagger';
 import { swagger } from '../routes/swagger';
 import { schemaValidator } from '../../validation/schemaValidator';
-import { credentials } from '../../use-cases/credentials/credentials';
+import { register } from '../../use-cases/register/register';
 
 
-export function credentialsController(app: Express) {
+export function registerController(app: Express) {
   const credentialsTag = {
-    name: 'Credentials',
-    description: 'Endpoints relacionados a credenciais'
+    name: 'Register',
+    description: 'Endpoints relacionados a criacao novo usuario'
   };
 
   const route = new SwaggerRouter(swagger, '', credentialsTag);
 
   route
-    .post('/credentials', schemaValidator.login, credentials)
+    .post('/register', schemaValidator.register, register)
     .swagger({
-      summary: 'Autenticar usuário',
-      description: 'Autentica um usuário usando email e senha',
+      summary: 'Criando usuário',
+      description: 'novo  usuário criado',
       schema: {
-        name: 'LoginDTO',
+        name: 'RegisterDTO',
         content: SwaggerContentType.JSON,
       },
       responses: {

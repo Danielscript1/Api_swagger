@@ -8,7 +8,7 @@ export async function credentials(req: Request, res: Response) {
 
     
     const { email, password } = loginData;
-
+    
 
     return res.json({
         success: true,

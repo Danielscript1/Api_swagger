@@ -2,12 +2,13 @@ import type { Express } from 'express';
 import { swagger, SwaggerPage } from './swagger';
 import 'reflect-metadata';
 import '../../use-cases/credentials/credentials.dto';
-import { credentialsController } from '../controller';
+import { credentialsController, registerController } from '../controller';
 
 
 export async function privateRoutes(app: Express) {
 
   credentialsController(app);
+  registerController(app)
 
   SwaggerPage.generate(app, '/api-docs', [
     {
