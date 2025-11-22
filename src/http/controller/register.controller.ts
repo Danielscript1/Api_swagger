@@ -23,13 +23,17 @@ export function registerController(app: Express) {
         content: SwaggerContentType.JSON,
       },
       responses: {
-        200: {
+        201: {
           content: SwaggerContentType.JSON,
-          description: 'Autenticação realizada com sucesso'
+          description: 'Usuário criado com sucesso'
         },
         400: {
           content: SwaggerContentType.JSON,
           description: 'Dados inválidos - Erro de validação'
+        },
+        409: {
+          content: SwaggerContentType.JSON,
+          description: 'Email já está em uso'
         },
         500: {
           content: SwaggerContentType.JSON,
