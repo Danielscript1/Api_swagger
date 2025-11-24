@@ -6,7 +6,7 @@ import { credentialsController, registerController } from '../controller';
 
 
 export async function privateRoutes(app: Express) {
-
+  
   credentialsController(app);
   registerController(app)
 

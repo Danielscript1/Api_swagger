@@ -5,7 +5,7 @@ import { schemaValidator } from '../../validation/schemaValidator';
 import { credentials } from '../../use-cases/credentials/credentials';
 
 
-export function credentialsController(app: Express) {
+export async function credentialsController(app: Express) {
   const credentialsTag = {
     name: 'Credentials',
     description: 'Endpoints relacionados a credenciais'
@@ -41,5 +41,6 @@ export function credentialsController(app: Express) {
 
   app.use(route.instance());
 }
+
 
 

@@ -4,7 +4,6 @@ import { swagger } from '../routes/swagger';
 import { schemaValidator } from '../../validation/schemaValidator';
 import { register } from '../../use-cases/register/register';
 
-
 export function registerController(app: Express) {
   const credentialsTag = {
     name: 'Register',

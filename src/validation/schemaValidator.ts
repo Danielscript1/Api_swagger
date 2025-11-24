@@ -1,4 +1,4 @@
-import { validateRequest } from '../http/middlewares/validation.middleware';
+import { validateRequest } from '../http/middlewares/validation/validation.middleware';
 import { LoginDTO } from '../use-cases/credentials/credentials.dto';
 import { RegisterDTO } from '../use-cases/register/register.dto';
 

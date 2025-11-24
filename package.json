@@ -35,6 +35,7 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "pg": "^8.16.3",
+    "rbac": "^5.0.3",
     "reflect-metadata": "^0.2.2",
     "swagger-ui-express": "^5.0.1"
   }
