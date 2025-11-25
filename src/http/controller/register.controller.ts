@@ -1,16 +1,16 @@
-import type { Express } from 'express';
+import type {  Router } from 'express';
 import { SwaggerRouter, SwaggerContentType } from '../routes/swagger';
 import { swagger } from '../routes/swagger';
 import { schemaValidator } from '../../validation/schemaValidator';
 import { register } from '../../use-cases/register/register';
 
-export function registerController(app: Express) {
+export async function registerController(app: Router) {
   const credentialsTag = {
     name: 'Register',
     description: 'Endpoints relacionados a criacao novo usuario'
   };
 
-  const route = new SwaggerRouter(swagger, '', credentialsTag);
+  const route = new SwaggerRouter(swagger, '', credentialsTag, '/api');
 
   route
     .post('/register', schemaValidator.register, register)

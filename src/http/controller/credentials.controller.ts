@@ -1,17 +1,17 @@
-import type { Express } from 'express';
+import type { Router } from 'express';
 import { SwaggerRouter, SwaggerContentType } from '../routes/swagger';
 import { swagger } from '../routes/swagger';
 import { schemaValidator } from '../../validation/schemaValidator';
 import { credentials } from '../../use-cases/credentials/credentials';
 
 
-export async function credentialsController(app: Express) {
+export async function credentialsController(app: Router) {
   const credentialsTag = {
     name: 'Credentials',
     description: 'Endpoints relacionados a credenciais'
   };
 
-  const route = new SwaggerRouter(swagger, '', credentialsTag);
+  const route = new SwaggerRouter(swagger, '', credentialsTag, '/api');
 
   route
     .post('/credentials', schemaValidator.login, credentials)

@@ -1,6 +1,6 @@
 import { Swagger } from "./swagger";
 import { Doc, docIndex } from "./swaggerIndexPage";
-import express from "express";
+import express, { Router } from "express";
 import swaggerUi from "swagger-ui-express";
 
 export type GenerateParam = {
@@ -9,7 +9,7 @@ export type GenerateParam = {
 };
 
 export class SwaggerPage {
-  static generate(express: express.Application, baseRoute: string, params: GenerateParam[]) {
+  static generate(express: Router, baseRoute: string, params: GenerateParam[]) {
     const doc = params.map((p) => p.doc);
     express.get(baseRoute, (req, res) => res.send(docIndex(doc)));
     params.forEach((p) => {
@@ -18,7 +18,7 @@ export class SwaggerPage {
     });
   }
 
-  static api(express: express.Application, baseRoute: string, swagger: Swagger) {
+  static api(express:Router, baseRoute: string, swagger: Swagger) {
     swagger.doc();
     
     const getSwaggerDoc = (req: express.Request) => {
@@ -88,7 +88,7 @@ export class SwaggerPage {
     });
   }
 
-  static addJsonDownloadRoute(express: express.Application, baseRoute: string, swagger: Swagger) {
+  static addJsonDownloadRoute(express: Router, baseRoute: string, swagger: Swagger) {
     express.options(`${baseRoute}/swagger.json`, (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
