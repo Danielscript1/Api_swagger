@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { PrismaUserRepository } from "../../repositories/prisma-users-repository";
 import { RegisterDTO } from "./register.dto";
+import { hash } from 'bcryptjs';
+
 
 export async function register(req: Request, res: Response){
 
@@ -8,14 +10,23 @@ export async function register(req: Request, res: Response){
 
     try {
        const registerUser = new PrismaUserRepository() 
+      
+       const userWithSameEmail =  await registerUser.findByEmail(user.email)
+    
+       if(userWithSameEmail){
+            throw new Error('E-mail already exists. ')
+       }
 
+      const password_hash = await hash(user.password, 6)
+       
         const newUser = await registerUser.createUser({
             name: user.name,
-            password: user.password,
+            password: password_hash,
             email: user.email,
             document: user.document,
             phone: user.phone
         }) 
+
 
         return res.status(201).json({
             message: "user created",

@@ -16,4 +16,16 @@ export class PrismaUserRepository{
         })
         return user
     }
+
+    async findByEmail(email: string) {
+        
+        const userWithSameEmail = await this.prisma.user.findUnique({
+            where:{
+                email:email
+            }, include: {
+                role: true
+            }
+        })
+        return userWithSameEmail
+    }
 } 

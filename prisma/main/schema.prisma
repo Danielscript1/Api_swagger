@@ -19,4 +19,25 @@ model User {
   updated_at      DateTime      @default(now()) @updatedAt
   is_deleted      Boolean?      @default(false)
   deleted_at      DateTime?
+  roleId          String?
+  role            Role?   @relation(fields: [roleId], references: [id])
+  @@map("User")
+}
+
+enum RoleName {
+  user
+  admin
+  superadmin
+}
+
+model Role {
+  id              String        @id @default(uuid()) @db.VarChar(40)
+  name            RoleName      @unique
+  description     String?       @db.VarChar(15)
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @default(now()) @updatedAt
+  is_deleted      Boolean?      @default(false)
+  deleted_at      DateTime?
+  users User[]
+  @@map("Role")
 }

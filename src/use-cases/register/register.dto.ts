@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { IsString, IsEmail, MinLength, IsOptional, maxLength, MaxLength } from 'class-validator';
+import { IsString, IsEmail, MinLength, IsOptional, maxLength, MaxLength, Matches } from 'class-validator';
 import { JSONSchema } from 'class-validator-jsonschema';
 
 export class RegisterDTO {
@@ -21,6 +21,10 @@ export class RegisterDTO {
 
   @IsString()
   @MinLength(8, { message: 'Senha usuário para autenticação' })
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/, {
+    message:
+      'Senha deve conter pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial',
+  })
   @JSONSchema({ 
     description: 'Senha do usuário', 
     example: 'senha123' 
