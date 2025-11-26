@@ -39,6 +39,7 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.3",
     "rbac": "^5.0.3",
+    "redis": "^5.10.0",
     "reflect-metadata": "^0.2.2",
     "swagger-ui-express": "^5.0.1"
   }

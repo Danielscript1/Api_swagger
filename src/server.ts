@@ -1,6 +1,7 @@
 import { app } from './app';
 import { initRBAC } from './http/middlewares/rbac/init';
 import { setupRouter } from './http/routes';
+import { initRedis } from './infra/cache/redisClient';
 
 
 
@@ -11,6 +12,7 @@ async function setup(){
   try{
     await initRBAC();
     await setupRouter(app)
+    await initRedis()
     app.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
       console.log(`Swagger documentation: http://localhost:${port}/api-docs`);

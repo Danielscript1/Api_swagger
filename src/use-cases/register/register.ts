@@ -2,13 +2,16 @@ import { Request, Response } from 'express';
 import { PrismaUserRepository } from "../../repositories/prisma-users-repository";
 import { RegisterDTO } from "./register.dto";
 import { hash } from 'bcryptjs';
+import { checkSignupRateLimit } from '../../infra/utils/checkSignupRateLimit';
 
 
 export async function register(req: Request, res: Response){
 
+
     const user: RegisterDTO = req.body
 
     try {
+       await checkSignupRateLimit(req)  
        const registerUser = new PrismaUserRepository() 
       
        const userWithSameEmail =  await registerUser.findByEmail(user.email)
@@ -45,8 +48,7 @@ export async function register(req: Request, res: Response){
             })
         }
 
-        console.error('Error creating user:', error)
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             message: 'Erro ao criar usuário',
             error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
         })
