@@ -1,21 +1,44 @@
-import { Request, Response } from 'express';
-import { LoginDTO } from './credentials.dto';
+import { PrismaUserRepository } from "../../repositories/prisma-users-repository";
+import { compare } from 'bcryptjs';
+import { UserCredentialsInvalidError } from '../errors/user-credetials-invalid';
+import { createToken } from '../../http/middlewares/auth/jwt/create.jwt';
 
+interface CredentialsUseCaseRequest {
+  email: string;
+  password: string;
+}
 
-export async function credentials(req: Request, res: Response) {
-   
-    const loginData: LoginDTO = req.body;
+interface CredentialsUseCaseResponse {
+  token: string;
+}
 
-    
-    const { email, password } = loginData;
-    
+export class CredentialsUseCase {
+  constructor(private usersRepository: PrismaUserRepository) {}
 
-    return res.json({
-        success: true,
-        message: "Autenticação realizada com sucesso",
-        data: {
-            email,
-         
-        }
+  async execute({
+    email,
+    password,
+  }: CredentialsUseCaseRequest): Promise<CredentialsUseCaseResponse> {
+    const user = await this.usersRepository.findByEmail(email);
+
+    if (!user) {
+      throw new UserCredentialsInvalidError();
+    }
+
+    const doesPasswordMatches = await compare(password, user.password);
+
+    if (!doesPasswordMatches) {
+      throw new UserCredentialsInvalidError();
+    }
+
+    const token = createToken({
+      sub: user.id,
+      email: user.email,
+      role:user.role
     });
+
+    return {
+      token,
+    };
+  }
 }

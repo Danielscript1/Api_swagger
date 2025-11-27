@@ -13,8 +13,12 @@ export class SwaggerPage {
     const doc = params.map((p) => p.doc);
     express.get(baseRoute, (req, res) => res.send(docIndex(doc)));
     params.forEach((p) => {
-      SwaggerPage.api(express, p.doc.link, p.swagger);
-      SwaggerPage.addJsonDownloadRoute(express, p.doc.link, p.swagger);
+      // Remove o prefixo /api do link para criar as rotas, já que o router está montado em /api
+      const routePath = p.doc.link.startsWith('/api/') 
+        ? p.doc.link.replace('/api', '') 
+        : p.doc.link;
+      SwaggerPage.api(express, routePath, p.swagger);
+      SwaggerPage.addJsonDownloadRoute(express, routePath, p.swagger);
     });
   }
 

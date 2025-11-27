@@ -12,16 +12,13 @@ export class SwaggerRouter {
   private _method: TMethod = 'GET';
   private router = Router();
   private swaggerInstances: Swagger[];
-  private _swaggerBasePath: string;
 
   constructor(
     swagger: Swagger[] | Swagger,
     public _basePath: string = "",
-    public tag?: SwaggerTag,
-    swaggerBasePath?: string
+    public tag?: SwaggerTag
   ) {
     this.swaggerInstances = !Array.isArray(swagger) ? [swagger] : swagger;
-    this._swaggerBasePath = swaggerBasePath !== undefined ? swaggerBasePath : _basePath;
 
     // Adicionar método swagger ao router
     Object.assign(this.router, {
@@ -30,7 +27,7 @@ export class SwaggerRouter {
           sw.addRoute(
             {
               method: this._method,
-              path: `${this._swaggerBasePath}${this._path}`,
+              path: `${this._basePath}${this._path}`,
             },
             info,
             this.tag
@@ -86,7 +83,7 @@ export class SwaggerRouter {
       sw.addRoute(
         {
           method: this._method,
-          path: `${this._swaggerBasePath}${this._path}`,
+          path: `${this._basePath}${this._path}`,
         },
         info,
         this.tag

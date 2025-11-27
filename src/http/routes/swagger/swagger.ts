@@ -131,7 +131,15 @@ export class Swagger {
   }
 
   addRoute(config: RouteConfig, route: ApplicationSwagger, tag?: SwaggerTag) {
-    this.routeData.push({ config, route, tag });
+    // Verificar se a rota já existe para evitar duplicação
+    const routeKey = `${config.method}:${config.path}`;
+    const existingRoute = this.routeData.find(
+      (r) => `${r.config.method}:${r.config.path}` === routeKey
+    );
+    
+    if (!existingRoute) {
+      this.routeData.push({ config, route, tag });
+    }
   }
 
   groupByPath(routeData: SwaggerRouteDoc[]) {

@@ -12,14 +12,15 @@ const port = process.env.PORT || 3000;
 
 async function setup(){
   try{
+    await setupRouter(app);
     await initRBAC();
-    await setupRouter(app)
     await initRedis()
     await connectRabbit()
     await setupQueues()
+  
     app.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
-      console.log(`Swagger documentation: http://localhost:${port}/api-docs`);
+      console.log(`Swagger documentation: http://localhost:${port}/api/api-docs`);
     });
   }catch(err){
    console.error('Erro ao inicializar RBAC:', err);
