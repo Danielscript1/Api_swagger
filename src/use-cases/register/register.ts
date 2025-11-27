@@ -3,6 +3,8 @@ import { PrismaUserRepository } from "../../repositories/prisma-users-repository
 import { RegisterDTO } from "./register.dto";
 import { hash } from 'bcryptjs';
 import { checkSignupRateLimit } from '../../infra/utils/checkSignupRateLimit';
+import { publishEmployeeCreated } from '../../messaging/producers/register-producer';
+
 
 
 export async function register(req: Request, res: Response){
@@ -30,6 +32,8 @@ export async function register(req: Request, res: Response){
             phone: user.phone
         }) 
 
+
+         await publishEmployeeCreated(newUser)
 
         return res.status(201).json({
             message: "user created",

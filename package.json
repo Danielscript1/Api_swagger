@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
+    "dev:consumer": "ts-node src/messaging/consumers/employees-consumer.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prisma:gen": "npx prisma generate --schema=./prisma/main/schema.prisma",
@@ -15,6 +16,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/amqplib": "^0.10.8",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.1",
@@ -26,8 +28,10 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.940.0",
     "@prisma/adapter-pg": "^7.0.0",
     "@prisma/client": "^6.19.0",
+    "amqplib": "^0.10.9",
     "bcryptjs": "^3.0.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
